@@ -91,4 +91,5 @@ def register():
 # 앱 실행
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)  # 외부 접속 가능하도록 수정
+
