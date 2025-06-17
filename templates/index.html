@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>스키 수리 관리</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1 {
+      color: #0077cc;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    form input {
+      padding: 8px;
+      font-size: 14px;
+    }
+
+    form button {
+      grid-column: span 2;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0077cc;
+      color: white;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .topbar span {
+      font-weight: bold;
+    }
+
+    .logout {
+      text-decoration: none;
+      color: #0077cc;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <span>🟢 로그인 지점: {{ branch }}</span>
+    <a href="/logout" class="logout">로그아웃</a>
+  </div>
+
+  <h1>⛷️ 수리 등록</h1>
+
+  <form method="post" action="/register">
+    <input name="customer_name" placeholder="고객명" required>
+    <input name="gear_type" placeholder="장비 종류" required>
+    <input name="repair_detail" placeholder="수리 내용" required>
+    <input name="price" placeholder="가격" type="number" required>
+    <button type="submit">등록하기</button>
+  </form>
+
+  <h2>📋 수리 내역</h2>
+
+  {% if logs and logs|length > 0 %}
+    <table>
+      <tr>
+        <th>고객명</th>
+        <th>장비</th>
+        <th>수리내용</th>
+        <th>가격</th>
+        <th>날짜</th>
+      </tr>
+      {% for log in logs %}
+      <tr>
+        <td>{{ log["customer_name"] }}</td>
+        <td>{{ log["gear_type"] }}</td>
+        <td>{{ log["repair_detail"] }}</td>
+        <td>{{ log["price"] }}</td>
+        <td>{{ log["date"] }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <p>등록된 수리 내역이 없습니다.</p>
+  {% endif %}
+</body>
+</html>
